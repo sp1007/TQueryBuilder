@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sp
- * Date: 05/13/16
- * Time: 1:24 AM
+ * Created by Son Pham
+ * email: sp@outlook.com.vn
+ * date: 05/13/2016
  */
 
 class TQueryBuilder
