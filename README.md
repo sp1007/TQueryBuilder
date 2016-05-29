@@ -33,8 +33,7 @@ $sql = TQueryBuilder::newQuery()
     ->where(['row(City, Country)',
         TQueryBuilder::newQuery()
             ->select(['City', 'Country'])
-            ->from('customers')],
-        'IN');
+            ->from('customers')], 'IN');
 =================================        
 sql: SELECT DISTINCT a.ProductID, a.UnitPrice AS Max_unit_price_sold FROM order_details AS a INNER JOIN (SELECT ProductID, max(UnitPrice) AS Max_unit_price_sold FROM order_details GROUP BY ProductID) AS b ON a.ProductID = b.ProductID AND a.UnitPrice = b.Max_unit_price_sold ORDER BY a.ProductID
 
@@ -61,13 +60,11 @@ $sql = TQueryBuilder::newQuery()
     
 =================================
 sql: INSERT INTO suppliers (supplier_id, supplier_name) VALUES (24553, 'IBM');
-//found on: http://www.techonthenet.com/sql/insert.php
 
 $sql = TQueryBuilder::newQuery()->insert('suppliers', ['supplier_id' => 24553, 'supplier_name' =>'IBM']);
 
 =================================
 sql: INSERT INTO suppliers (supplier_id, supplier_name) SELECT account_no, name FROM customers WHERE city = 'Newark';
-//found on: http://www.techonthenet.com/sql/insert.php
 
 $sql = TQueryBuilder::newQuery()
     ->insert('suppliers', ['supplier_id', 'supplier_name'], true)
