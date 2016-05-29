@@ -24,7 +24,7 @@ This is tiny php class to build sql query for PDO. The class supports SELECT, IN
 
 #TQueryBuilder Examples:
 
-      sql: SELECT EmployeeID, FirstName, LastName, City, Country AS cty FROM employees WHERE row(City, Country) IN (SELECT City, Country FROM customers);
+sql: SELECT EmployeeID, FirstName, LastName, City, Country AS cty FROM employees WHERE row(City, Country) IN (SELECT City, Country FROM customers);
 
       $sql = TQueryBuilder::newQuery()
       ->select(['EmployeeID', 'FirstName', 'LastName', 'City', 'cty' => 'Country'])
