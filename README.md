@@ -54,10 +54,22 @@ $sql = TQueryBuilder::newQuery()
     ->from('employees')
     ->where(['row(City, Country)', 'value' => 100]);
     
+result of builder:
+
+$sql->getSQL():  SELECT EmployeeID, FirstName, LastName, City, Country AS cty FROM employees WHERE row(City, Country) = :value1
+
+$sql->getBindingValues():  array(1) { [":value1"]=> int(100) } 
+    
 =================================
 sql: INSERT INTO suppliers (supplier_id, supplier_name) VALUES (24553, 'IBM');
 
 $sql = TQueryBuilder::newQuery()->insert('suppliers', ['supplier_id' => 24553, 'supplier_name' =>'IBM']);
+
+result of builder:
+
+$sql->getSQL():  INSERT INTO suppliers(supplier_id, supplier_name) VALUES (:insert1, :insert2)
+
+$sql->getBindingValues():  array(2) { [":insert1"]=> int(24553) [":insert2"]=> string(3) "IBM" }
 
 =================================
 sql: INSERT INTO suppliers (supplier_id, supplier_name) SELECT account_no, name FROM customers WHERE city = 'Newark';
@@ -67,6 +79,12 @@ $sql = TQueryBuilder::newQuery()
         ->select(['account_no', 'name'])
         ->from('customers')
         ->where(['city', 'value' => 'Newark']);
+        
+result of builder:
+
+$sql->getSQL():  INSERT INTO suppliers(supplier_id, supplier_name) SELECT account_no, name FROM customers WHERE city = :value1
+
+$sql->getBindingValues():  array(1) { [":value1"]=> string(6) "Newark" }        
 
 =================================        
 sql: INSERT INTO clients (client_id, client_name, client_type) SELECT supplier_id, supplier_name, 'advertising' FROM suppliers WHERE NOT EXISTS (SELECT * FROM clients WHERE clients.client_id = suppliers.supplier_id);
