@@ -1,12 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sp
- * Date: 05/13/16
- * Time: 1:24 AM
+ * Created by Son Pham.
+ * Email: sp@outlook.com.vn
+ * 
  */
-
-namespace Controller\Database;
 
 
 class TQueryBuilder
