@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by Son Pham
- * email: sp@outlook.com.vn
- * date: 05/13/2016
+ * Created by PhpStorm.
+ * User: sp
+ * Date: 05/13/16
+ * Time: 1:24 AM
  */
+
+namespace Controller\Database;
+
 
 class TQueryBuilder
 {
@@ -90,7 +94,7 @@ class TQueryBuilder
     private function append($text, $condition = true, $addSpace = true) {
 
         if ($condition === true) {
-            if ($addSpace === true && (strlen($this->sql) > 0)) $this->sql .= ' ';
+            if ($addSpace === true && (!empty($this->sql))) $this->sql .= ' ';
             $this->sql .= sprintf('%s', $text);
         }
 
@@ -200,7 +204,7 @@ class TQueryBuilder
      */
     private function condition($logic_name, array $fields = [], $operator = '=', $usedOpen = false) {
 
-        $this->append($logic_name, strlen($logic_name) > 0)->append('(', $usedOpen);
+        $this->append($logic_name, !empty($logic_name))->append('(', $usedOpen);
 
         $count = count($fields);
 
@@ -214,7 +218,7 @@ class TQueryBuilder
             //next field
             if ($count > 1) {
                 //add operator
-                $this->append($operator);
+                $this->append($operator, !empty($operator));
                 $this->appendValue($values[1], $types[1]);
             }
         }
@@ -232,12 +236,19 @@ class TQueryBuilder
     }
 
     /**
-     * @param string $key
-     * @param string $values
+     * @param string|array $key
+     * @param string $value
      * @return TQueryBuilder
+     * @internal param string $values
      */
-    public function setBindingValue($key = '', $values = '') {
-        if (strlen($key) > 0) $this->bindingValues[$key] = $values;
+    public function setBindingValue($key = '', $value = '') {
+        if (is_array($key)) {
+            foreach ($key as $k => $v ) {
+                $this->bindingValues[$k] = $v;
+            }
+        }
+        elseif (!empty($key)) $this->bindingValues[$key] = $value;
+
         return $this;
     }
 
@@ -291,7 +302,7 @@ class TQueryBuilder
         if (strcmp($this->lastStatement, 'FROM') === 0) $this->append(",", true, false);
         else $this->append('FROM');
 
-        $this->appendValue($table)->append('AS '.$alias, strlen($alias) > 0);
+        $this->appendValue($table)->append('AS '.$alias, !empty($alias));
 
         $this->lastStatement = 'FROM';
         return $this;
@@ -305,8 +316,8 @@ class TQueryBuilder
      */
     public function join($table, $alias = null, $type = null) {
 
-        $this->append($type, strlen($type) > 0)->append('JOIN')->appendValue($table)
-            ->append('AS '.$alias, strlen($alias) > 0);
+        $this->append($type, !empty($type))->append('JOIN')->appendValue($table)
+            ->append('AS '.$alias, !empty($alias));
         
         $this->lastStatement = 'JOIN';
         return $this;
