@@ -27,12 +27,10 @@ try {
 
 sql: SELECT EmployeeID, FirstName, LastName, City, Country AS cty FROM employees WHERE row(City, Country) IN (SELECT City, Country FROM customers);
 
-$sql = TQueryBuilder::newQuery()
-    ->select(['EmployeeID', 'FirstName', 'LastName', 'City', 'cty' => 'Country'])
-    ->from('employees')
-    ->where(['row(City, Country)',
-        TQueryBuilder::newQuery()->select(['City', 'Country'])->from('customers')], 'IN');
-=================================        
+$sql = TQueryBuilder::newQuery()->select(['EmployeeID', 'FirstName', 'LastName', 'City', 'cty' => 'Country'])->from('employees')->where(['row(City, Country)', TQueryBuilder::newQuery()->select(['City', 'Country'])->from('customers')], 'IN');
+
+=================================    
+
 sql: SELECT DISTINCT a.ProductID, a.UnitPrice AS Max_unit_price_sold FROM order_details AS a INNER JOIN (SELECT ProductID, max(UnitPrice) AS Max_unit_price_sold FROM order_details GROUP BY ProductID) AS b ON a.ProductID = b.ProductID AND a.UnitPrice = b.Max_unit_price_sold ORDER BY a.ProductID
 
 $sql = TQueryBuilder::newQuery()
