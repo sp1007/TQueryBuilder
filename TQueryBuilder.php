@@ -6,9 +6,6 @@
  * Time: 1:24 AM
  */
 
-namespace Controller\Database;
-
-
 class TQueryBuilder
 {
     /**
