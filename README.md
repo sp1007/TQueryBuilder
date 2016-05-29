@@ -23,7 +23,6 @@ try {
 }
 
 #TQueryBuilder Examples:
-(These are sql samples i found on internet)
 
 sql: SELECT EmployeeID, FirstName, LastName, City, Country AS cty FROM employees WHERE row(City, Country) IN (SELECT City, Country FROM customers);
 
