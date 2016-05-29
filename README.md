@@ -36,7 +36,7 @@ This is tiny php class to build sql query for PDO. The class supports SELECT, IN
 
 =================================    
 
-      sql: SELECT DISTINCT a.ProductID, a.UnitPrice AS Max_unit_price_sold FROM order_details AS a INNER JOIN (SELECT ProductID, max(UnitPrice) AS Max_unit_price_sold FROM order_details GROUP BY ProductID) AS b ON a.ProductID = b.ProductID AND a.UnitPrice = b.Max_unit_price_sold ORDER BY a.ProductID
+sql: SELECT DISTINCT a.ProductID, a.UnitPrice AS Max_unit_price_sold FROM order_details AS a INNER JOIN (SELECT ProductID, max(UnitPrice) AS Max_unit_price_sold FROM order_details GROUP BY ProductID) AS b ON a.ProductID = b.ProductID AND a.UnitPrice = b.Max_unit_price_sold ORDER BY a.ProductID
 
       $sql = TQueryBuilder::newQuery()
             ->select(['a.ProductID', 'Max_unit_price_sold' => 'a.UnitPrice'], true)
@@ -52,7 +52,7 @@ This is tiny php class to build sql query for PDO. The class supports SELECT, IN
 
 =================================
 
-      sql: SELECT EmployeeID, FirstName, LastName, City, Country AS cty FROM employees WHERE row(City, Country) = 100
+sql: SELECT EmployeeID, FirstName, LastName, City, Country AS cty FROM employees WHERE row(City, Country) = 100
 
       $sql = TQueryBuilder::newQuery()
             ->select(['EmployeeID', 'FirstName', 'LastName', 'City', 'cty' => 'Country'])
@@ -67,7 +67,7 @@ result of builder:
     
 =================================
 
-      sql: INSERT INTO suppliers (supplier_id, supplier_name) VALUES (24553, 'IBM');
+sql: INSERT INTO suppliers (supplier_id, supplier_name) VALUES (24553, 'IBM');
 
       $sql = TQueryBuilder::newQuery()->insert('suppliers', ['supplier_id' => 24553, 'supplier_name' =>'IBM']);
 
@@ -79,7 +79,7 @@ result of builder:
 
 =================================
 
-      sql: INSERT INTO suppliers (supplier_id, supplier_name) SELECT account_no, name FROM customers WHERE city = 'Newark';
+sql: INSERT INTO suppliers (supplier_id, supplier_name) SELECT account_no, name FROM customers WHERE city = 'Newark';
 
       $sql = TQueryBuilder::newQuery()
             ->insert('suppliers', ['supplier_id', 'supplier_name'], true)
@@ -95,7 +95,7 @@ result of builder:
 
 =================================
 
-      sql: INSERT INTO clients (client_id, client_name, client_type) SELECT supplier_id, supplier_name, 'advertising' FROM suppliers WHERE NOT EXISTS (SELECT * FROM clients WHERE clients.client_id = suppliers.supplier_id);
+sql: INSERT INTO clients (client_id, client_name, client_type) SELECT supplier_id, supplier_name, 'advertising' FROM suppliers WHERE NOT EXISTS (SELECT * FROM clients WHERE clients.client_id = suppliers.supplier_id);
 
       $sql = TQueryBuilder::newQuery()
             ->insert('clients', ['client_id', 'client_name', 'client_type'], true)
@@ -111,7 +111,7 @@ result of builder:
 
 =================================  
 
-      sql: UPDATE suppliers SET supplier_id = 150, supplier_name = 'Apple', city = 'Cupertino' WHERE supplier_name = 'Google';
+sql: UPDATE suppliers SET supplier_id = 150, supplier_name = 'Apple', city = 'Cupertino' WHERE supplier_name = 'Google';
 
       $sql = TQueryBuilder::newQuery()
             ->update('suppliers', ['supplier_id' => 150, 'supplier_name' => 'Apple', 'city' => 'Cupertino'])
@@ -119,7 +119,7 @@ result of builder:
     
 =================================  
 
-      sql: UPDATE summary_data SET current_category = (SELECT category_id FROM products WHERE products.product_id = summary_data.product_id) WHERE EXISTS (SELECT category_id FROM products WHERE products.product_id BETWEEN 50 AND 200)
+sql: UPDATE summary_data SET current_category = (SELECT category_id FROM products WHERE products.product_id = summary_data.product_id) WHERE EXISTS (SELECT category_id FROM products WHERE products.product_id BETWEEN 50 AND 200)
 
       $sql = TQueryBuilder::newQuery()
             ->update('summary_data',[
@@ -140,7 +140,7 @@ result of builder:
 
 with delete query
 
-      sql: DELETE FROM table_name WHERE id = 10 AND value >= 50
+sql: DELETE FROM table_name WHERE id = 10 AND value >= 50
 
       $sql = TQueryBuilder::newQuery()
             ->delete('table_name')
